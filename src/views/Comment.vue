@@ -1,23 +1,37 @@
 <template>
   <div class="comment-container">
-    Card
-    Replies-container
-      Card
-    <!-- <div class="comment">
-      {{ id }}
-    </div>
-    <div class="replies-container">
-      <div v-for="reply in replies" :key="reply.id" class="reply">
-        {{ reply.id }}
-      </div>
+    <Card
+      :id="comment.id"
+      :content="comment.content"
+      :createdAt="comment.createdAt"
+      :score="comment.score"
+      :user="comment.user"
+      type="comment"
+    />
+    <!-- <div class="replies-container" v-if="comment.replies.length > 0">
+      <Card
+        v-for="reply in comment.replies"
+        :key="reply.id"
+        :id="reply.id"
+        :content="reply.content"
+        :createdAt="reply.createdAt"
+        :score="reply.score"
+        :user="reply.user"
+        type="reply"
+      />
     </div> -->
   </div>
 </template>
 
 <script>
+import Card from "../components/Card.vue";
 export default {
   name: "Comment",
+  components: {
+    Card,
+  },
   props: {
+    comment: Object,
     // id: Number,
     // content: String,
     // createdAt: String,
@@ -38,7 +52,7 @@ export default {
 <style scoped>
 .card-container {
   color: rgb(74, 23, 32);
-  border: 2px solid red;
+  /* border: 2px solid red; */
   width: 100%;
   /* width: 91%; */
   /* height: 250px; */
