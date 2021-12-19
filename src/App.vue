@@ -5,6 +5,7 @@
       <Comment
         v-for="comment in comments"
         :key="comment.id"
+        :currentUser="currentUser"
         v-bind:comment="comment"
       />
     </div>
@@ -78,7 +79,7 @@ body {
   /* border: 2px solid purple; */
   width: 100%;
 }
-.comments-container div:not(:first-child){
+.comments-container > div:not(:first-child){
   margin-top: 16px;
 }
 

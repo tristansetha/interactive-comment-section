@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container">
+  <div :class="type === 'reply' ? 'reply-container' : 'card-container'">
     <div class="card-elements-container">
       <div class="card-header-container">
         <div class="picture-container">
@@ -9,32 +9,54 @@
             alt="profile-image"
           />
         </div>
-        <div class="username">
-          <span>
+        <div class="username-container">
+          <span class="username">
             {{ user.username }}
           </span>
         </div>
-        <div class="createdAt">
+        <div v-if="currentUser.username === user.username" class="you-label">
+          <span>you</span>
+        </div>
+        <div class="createdAt-container">
           <span>
             {{ createdAt }}
           </span>
         </div>
       </div>
-      <div class="content-container">{{ content }}</div>
+      <div v-if="type === 'reply'" class="content-container">
+        <span>@{{ replyingTo }} </span> {{ content }}
+      </div>
+      <div v-else class="content-container">
+        {{ content }}
+      </div>
       <div class="score-container">
         <div class="score-btn">
-          <button class="score-add-btn">
+          <button @click="addScore()" class="score-add-btn">
             <img :src="plusIcon" alt="add-score" />
           </button>
           <span class="score-data">
-            <div>{{ score }}</div>
+            <div>{{ currentScore }}</div>
           </span>
-          <button class="score-minus-btn">
+          <button @click="minusScore()" class="score-minus-btn">
             <img :src="minusIcon" alt="minus-score" />
           </button>
         </div>
       </div>
-      <div class="reply-btn-container">
+      <div v-if="currentUser.username === user.username" class="edit-container">
+        <div class="delete">
+          <div>
+            <img :src="deleteIcon" alt="delete comment" />
+          </div>
+          <span> Delete </span>
+        </div>
+        <div class="edit">
+          <div>
+            <img :src="editIcon" alt="edit comment" />
+          </div>
+          <span>Edit</span>
+        </div>
+      </div>
+      <div v-else class="reply-btn-container">
         <img :src="replyIcon" alt="reply icon" /> reply
       </div>
     </div>
@@ -45,6 +67,8 @@
 import PlusIcon from "../assets/images/icon-plus.svg";
 import MinusIcon from "../assets/images/icon-minus.svg";
 import ReplyIcon from "../assets/images/icon-reply.svg";
+import DeleteIcon from "../assets/images/icon-delete.svg";
+import EditIcon from "../assets/images/icon-edit.svg";
 export default {
   name: "Card",
   props: {
@@ -63,14 +87,26 @@ export default {
     },
     // optional
     replies: Array,
+    currentUser: Object,
     type: String,
   },
   data: function () {
     return {
+      currentScore: this.score,
       plusIcon: PlusIcon,
       minusIcon: MinusIcon,
       replyIcon: ReplyIcon,
+      deleteIcon: DeleteIcon,
+      editIcon: EditIcon,
     };
+  },
+  methods: {
+    addScore() {
+      this.currentScore++;
+    },
+    minusScore() {
+      this.currentScore--;
+    },
   },
 };
 </script>
@@ -84,6 +120,13 @@ export default {
   background-color: var(--White);
   border-radius: 8px;
 }
+.reply-container {
+  color: rgb(74, 23, 32);
+  width: 94%;
+  padding: 16px;
+  background-color: var(--White);
+  border-radius: 8px;
+}
 
 .card-elements-container {
   display: grid;
@@ -93,9 +136,11 @@ export default {
 }
 
 .card-header-container {
-  grid-column: span 2;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
+  grid-column: span 2;
   gap: 16px;
 }
 
@@ -109,24 +154,38 @@ export default {
   height: 32px;
 }
 
-.username {
-  height: 100%;
-}
-.username span {
-  font-weight: 700;
-  line-height: 18.96px;
-  color: var(--Dark-blue);
-}
-
-.createdAt {
-  height: 100%;
-}
-
-.createdAt span {
+.you-label {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 400;
+  width: 36px;
+  height: 19px;
+  background-color: var(--Moderate-blue);
+  color: var(--White);
+  border-radius: 2px;
+}
+
+.you-label > span {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.username-container {
+}
+.username {
+  font-weight: 700;
+  color: var(--Dark-blue);
+}
+
+.createdAt-container {
+  /* height: 100%; */
+}
+
+.createdAt-container > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
   font-size: 16px;
   line-height: 24px;
   color: var(--Grayish-Blue);
@@ -135,9 +194,15 @@ export default {
 
 .content-container {
   /* border: 2px solid red; */
+  font-weight: 500;
   color: var(--Grayish-Blue);
   text-align: left;
   grid-column: span 2;
+}
+
+.content-container > span {
+  color: var(--Moderate-blue);
+  font-weight: 500;
 }
 
 .score-btn {
@@ -173,6 +238,30 @@ export default {
   align-items: center;
   font-weight: 700;
   line-height: 18.96px;
+  color: var(--Moderate-blue);
+}
+
+.edit-container {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 16px;
+  font-weight: 700;
+  /* color: var(--Moderate-blue); */
+}
+.edit-container .delete {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-container .delete > span {
+  color: var(--Soft-Red);
+}
+.edit-container .edit {
+  display: flex;
+  gap: 8px;
+}
+.edit-container .edit > span {
   color: var(--Moderate-blue);
 }
 

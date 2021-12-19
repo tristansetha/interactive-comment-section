@@ -6,20 +6,23 @@
       :createdAt="comment.createdAt"
       :score="comment.score"
       :user="comment.user"
+      :currentUser="currentUser"
       type="comment"
     />
-    <!-- <div class="replies-container" v-if="comment.replies.length > 0">
+    <div class="replies-container" v-if="comment.replies.length > 0">
       <Card
         v-for="reply in comment.replies"
         :key="reply.id"
         :id="reply.id"
         :content="reply.content"
         :createdAt="reply.createdAt"
+        :replyingTo="reply.replyingTo"
         :score="reply.score"
         :user="reply.user"
+        :currentUser="currentUser"
         type="reply"
       />
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -31,19 +34,8 @@ export default {
     Card,
   },
   props: {
+    currentUser: Object,
     comment: Object,
-    // id: Number,
-    // content: String,
-    // createdAt: String,
-    // score: Number,
-    // user: {
-    //   image: {
-    //     png: String,
-    //     webp: String,
-    //   },
-    //   username: String,
-    // },
-    // replies: Array,
   },
 };
 </script>
@@ -52,16 +44,25 @@ export default {
 <style scoped>
 .comment-container {
   color: rgb(74, 23, 32);
-  /* border: 2px solid red; */
   width: 100%;
-  /* width: 91%; */
-  /* height: 250px; */
+  gap: 16px;
+}
+
+.replies-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-left: 2px solid var(--Light-gray);
+}
+
+.replies-container > div {
+  margin-top: 16px;
 }
 
 .comment {
   border: 2px solid black;
 }
-h3 {
+/* h3 {
   margin: 40px 0 0;
 }
 ul {
@@ -74,5 +75,5 @@ li {
 }
 a {
   color: #42b983;
-}
+} */
 </style>
