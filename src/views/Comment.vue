@@ -50,13 +50,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.card-container {
+.comment-container {
   color: rgb(74, 23, 32);
   /* border: 2px solid red; */
   width: 100%;
   /* width: 91%; */
   /* height: 250px; */
 }
+
 .comment {
   border: 2px solid black;
 }
