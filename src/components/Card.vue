@@ -49,21 +49,36 @@
           </div>
           <span> Delete </span>
         </div>
-        <div class="edit">
+        <div @click="this.replyFormOpen = !this.replyFormOpen" class="edit">
           <div>
             <img :src="editIcon" alt="edit comment" />
           </div>
           <span>Edit</span>
         </div>
       </div>
-      <div v-else class="reply-btn-container">
-        <img :src="replyIcon" alt="reply icon" /> reply
+      <div
+        @click="this.replyFormOpen = !this.replyFormOpen"
+        v-else
+        class="reply-btn-container"
+      >
+        <img class="reply-icon" :src="replyIcon" alt="reply icon" />
+        <span>reply</span>
       </div>
     </div>
   </div>
+  <CommentForm
+    v-if="replyFormOpen"
+    :commentId="commentFormCommentId"
+    :replyingTo="user.username"
+    :commentFormType="commentFormType"
+    :handleComment="handleComment"
+    :currentUser="currentUser"
+  />
+  <!-- <div>hello world</div> -->
 </template>
 
 <script>
+import CommentForm from "../components/CommentForm.vue";
 import PlusIcon from "../assets/images/icon-plus.svg";
 import MinusIcon from "../assets/images/icon-minus.svg";
 import ReplyIcon from "../assets/images/icon-reply.svg";
@@ -71,6 +86,9 @@ import DeleteIcon from "../assets/images/icon-delete.svg";
 import EditIcon from "../assets/images/icon-edit.svg";
 export default {
   name: "Card",
+  components: {
+    CommentForm,
+  },
   props: {
     id: Number,
     content: String,
@@ -89,9 +107,13 @@ export default {
     replies: Array,
     currentUser: Object,
     type: String,
+    handleComment: Function,
+    commentFormType: String,
+    commentFormCommentId: Number,
   },
   data: function () {
     return {
+      replyFormOpen: false,
       currentScore: this.score,
       plusIcon: PlusIcon,
       minusIcon: MinusIcon,
@@ -119,6 +141,7 @@ export default {
   padding: 16px;
   background-color: var(--White);
   border-radius: 8px;
+  /* border: 2px solid black; */
 }
 .reply-container {
   color: rgb(74, 23, 32);
@@ -126,6 +149,7 @@ export default {
   padding: 16px;
   background-color: var(--White);
   border-radius: 8px;
+  /* border: 2px solid black; */
 }
 
 .card-elements-container {
@@ -252,6 +276,10 @@ export default {
 .edit-container .delete {
   display: flex;
   gap: 8px;
+  cursor: pointer;
+}
+.edit-container .delete:hover {
+  filter: opacity(25%);
 }
 
 .edit-container .delete > span {
@@ -260,6 +288,10 @@ export default {
 .edit-container .edit {
   display: flex;
   gap: 8px;
+  cursor: pointer;
+}
+.edit-container .edit:hover {
+  filter: opacity(25%);
 }
 .edit-container .edit > span {
   color: var(--Moderate-blue);
@@ -272,5 +304,10 @@ export default {
   gap: 8px;
   font-weight: 700;
   color: var(--Moderate-blue);
+  cursor: pointer;
+}
+
+.reply-btn-container:hover {
+  filter: opacity(25%);
 }
 </style>

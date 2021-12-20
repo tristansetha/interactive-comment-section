@@ -7,8 +7,11 @@
       :score="comment.score"
       :user="comment.user"
       :currentUser="currentUser"
+      :handleComment="handleComment"
       type="comment"
-    />
+      :commentFormCommentId="comment.id"
+      :commentFormType="
+        currentUser.username === comment.user ? 'comment-update': 'comment-reply'"/>
     <div class="replies-container" v-if="comment.replies.length > 0">
       <Card
         v-for="reply in comment.replies"
@@ -20,6 +23,11 @@
         :score="reply.score"
         :user="reply.user"
         :currentUser="currentUser"
+        :handleComment="handleComment"
+        :commentFormCommentId="comment.id"
+        :commentFormType="
+          currentUser.username === comment.user ? 'reply-update' : 'reply-reply'
+        "
         type="reply"
       />
     </div>
@@ -36,6 +44,7 @@ export default {
   props: {
     currentUser: Object,
     comment: Object,
+    handleComment: Function,
   },
 };
 </script>
@@ -54,10 +63,12 @@ export default {
   align-items: flex-end;
   margin-top: 16px;
   border-left: 2px solid var(--Light-gray);
+  /* border: 2px solid black; */
 }
 
-.replies-container > div:not(:first-child) {
+.replies-container > :not(:first-child) {
   margin-top: 16px;
+  /* border: 10px solid blue; */
 }
 
 .comment {
