@@ -45,17 +45,18 @@ export default {
 .comment-container {
   color: rgb(74, 23, 32);
   width: 100%;
-  gap: 16px;
+  /* gap: 16px; */
 }
 
 .replies-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-top: 16px;
   border-left: 2px solid var(--Light-gray);
 }
 
-.replies-container > div {
+.replies-container > div:not(:first-child) {
   margin-top: 16px;
 }
 

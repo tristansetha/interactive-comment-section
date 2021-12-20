@@ -1,6 +1,5 @@
 <template>
   <main class="main-container">
-    <!-- <Card v-bind:comments="comments" msg="Welcome to Your Vue.js App" /> -->
     <div class="comments-container">
       <Comment
         v-for="comment in comments"
@@ -9,16 +8,25 @@
         v-bind:comment="comment"
       />
     </div>
-    <!-- <Card
-      v-for="comment in comments"
-      :key="comment.id"
-      :id="comment.id"
-      :content="comment.content"
-      :createdAt="comment.createdAt"
-      :score="comment.score"
-      :user="comment.user"
-      :replies="comment.replies" -->
-    <!-- /> -->
+    <div class="comment-form-container">
+      <div class="input-container">
+        <textarea
+          class="comment-input"
+          name="comment"
+          placeholder="Add a comment..."
+        ></textarea>
+      </div>
+      <div class="picture-container">
+        <img
+          class="picture"
+          :src="require(`./assets/${this.currentUser.image.png}`)"
+          alt="profile picture"
+        />
+      </div>
+      <div class="send-btn-container">
+        <button class="send-btn">SEND</button>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -69,6 +77,7 @@ body {
 
 .main-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
   padding: 4% 2% 4% 2%;
@@ -79,8 +88,77 @@ body {
   /* border: 2px solid purple; */
   width: 100%;
 }
-.comments-container > div:not(:first-child){
+.comments-container > div:not(:first-child) {
   margin-top: 16px;
+}
+
+.comment-form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr;
+  gap: 16px;
+  padding: 16px;
+  margin-top: 16px;
+  height: 189px;
+  border-radius: 8px;
+  /* border: 1px solid black; */
+  background-color: var(--White);
+}
+
+.input-container {
+  grid-column: span 2;
+  /* border: 1px solid red; */
+}
+
+.comment-input {
+  padding: 12px 24px 12px 24px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--Light-gray);
+  border-radius: 8px;
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  color: var(--Grayish-Blue);
+}
+
+.comment-input:focus {
+  outline: none !important;
+
+  border: 1px solid var(--Moderate-blue);
+}
+
+.picture-container {
+  display: flex;
+  align-items: center;
+  /* border: 1px solid black; */
+}
+
+.picture {
+  width: 32px;
+  height: 32px;
+}
+
+.send-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* border: 1px solid black; */
+}
+
+.send-btn {
+  height: 48px;
+  width: 104px;
+  border: none;
+  border-radius: 8px;
+  color: var(--White);
+  background-color: var(--Moderate-blue);
+  font-weight: 500;
+  font-family: "Rubik", sans-serif;
+}
+
+.send-btn:hover {
+  cursor: pointer;
+  background-color: var(--Light-grayish-blue);
 }
 
 #app {
