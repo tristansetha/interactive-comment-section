@@ -63,7 +63,6 @@ export default {
 .comment-container {
   color: rgb(74, 23, 32);
   width: 100%;
-  /* gap: 16px; */
 }
 
 .replies-container {

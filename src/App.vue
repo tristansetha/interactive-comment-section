@@ -188,9 +188,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* border: 3px solid blue; */
   background-color: var(--Very-light-gray);
-
-  /* min-height: 100vh; */
 }
 </style>

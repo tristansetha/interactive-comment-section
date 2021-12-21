@@ -73,7 +73,6 @@ export default {
   height: 189px;
   width: 100%;
   border-radius: 8px;
-  /* border: 1px solid black; */
   background-color: var(--White);
 }
 .comment-form-reply-container {
@@ -86,13 +85,11 @@ export default {
   width: 94%;
   height: 189px;
   border-radius: 8px;
-  /* border: 1px solid black; */
   background-color: var(--White);
 }
 
 .input-container {
   grid-column: span 2;
-  /* border: 1px solid red; */
 }
 
 .comment-input {
@@ -115,7 +112,6 @@ export default {
 .picture-container {
   display: flex;
   align-items: center;
-  /* border: 1px solid black; */
 }
 
 .picture {
@@ -127,7 +123,6 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* border: 1px solid black; */
 }
 
 .send-btn {
