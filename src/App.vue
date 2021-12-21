@@ -44,13 +44,13 @@ export default {
             break;
           }
         }
-      } else if (info.type === "reply"){
+      } else if (info.type === "reply") {
         for (let i = 0; i < this.comments.length; i++) {
           if (this.comments[i].id === info.threadId) {
             for (let j = 0; j < this.comments[i].replies.length; j++) {
               if (this.comments[i].replies[j].id === info.id) {
                 this.comments[i].replies.splice(j, 1);
-                console.log(this.comments[i].replies)
+                console.log(this.comments[i].replies);
                 break;
               }
             }
@@ -165,21 +165,25 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   padding: 4% 2% 4% 2%;
-  /* border: 2px solid blue; */
 }
 
 .comments-container {
-  /* border: 2px solid purple; */
   width: 100%;
 }
 .comments-container > div:not(:first-child) {
   margin-top: 16px;
 }
 
+@media (min-width: 1440px) {
+  .comments-container {
+    width: 730px;
+  }
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Rubik", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -187,6 +191,6 @@ body {
   /* border: 3px solid blue; */
   background-color: var(--Very-light-gray);
 
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 </style>

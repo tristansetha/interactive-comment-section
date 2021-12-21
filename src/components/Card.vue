@@ -31,13 +31,21 @@
       </div>
       <div class="score-container">
         <div class="score-btn">
-          <button @click="addScore()" class="score-add-btn">
+          <button
+            @click="addScore()"
+            :class="this.scoredUp ? 'score-add-btn scored' : 'score-add-btn'"
+          >
             <img :src="plusIcon" alt="add-score" />
           </button>
           <span class="score-data">
             <div>{{ currentScore }}</div>
           </span>
-          <button @click="minusScore()" class="score-minus-btn">
+          <button
+            @click="minusScore()"
+            :class="
+              this.scoredDown ? 'score-minus-btn scored' : 'score-minus-btn'
+            "
+          >
             <img :src="minusIcon" alt="minus-score" />
           </button>
         </div>
@@ -94,11 +102,12 @@
         >
           NO, CANCEL
         </button>
-        <button @click="handleDeleteConfirmation" class="delete-confirm-btn">YES, DELETE</button>
+        <button @click="handleDeleteConfirmation" class="delete-confirm-btn">
+          YES, DELETE
+        </button>
       </div>
     </div>
   </div>
-  <!-- <div>hello world</div> -->
 </template>
 
 <script>
@@ -138,6 +147,9 @@ export default {
   },
   data: function () {
     return {
+      scored: false,
+      scoredUp: false,
+      scoredDown: false,
       deleteModalOpen: false,
       replyFormOpen: false,
       currentScore: this.score,
@@ -161,10 +173,27 @@ export default {
       this.replyFormOpen = !this.replyFormOpen;
     },
     addScore() {
-      this.currentScore++;
+      console.log("adding");
+      if (!this.scored) {
+        this.currentScore++;
+        this.scored = true;
+        this.scoredUp = true;
+      } else if (this.scored && this.scoredUp) {
+        this.currentScore--;
+        this.scored = false;
+        this.scoredUp = false;
+      }
     },
     minusScore() {
-      this.currentScore--;
+      if (!this.scored) {
+        this.currentScore--;
+        this.scored = true;
+        this.scoredDown = true;
+      } else if (this.scored && this.scoredDown) {
+        this.currentScore++;
+        this.scored = false;
+        this.scoredDown = false;
+      }
     },
   },
 };
@@ -178,7 +207,6 @@ export default {
   padding: 16px;
   background-color: var(--White);
   border-radius: 8px;
-  /* border: 2px solid black; */
 }
 .reply-container {
   color: rgb(74, 23, 32);
@@ -186,7 +214,6 @@ export default {
   padding: 16px;
   background-color: var(--White);
   border-radius: 8px;
-  /* border: 2px solid black; */
 }
 
 .card-elements-container {
@@ -231,31 +258,23 @@ export default {
   font-size: 13px;
 }
 
-.username-container {
-}
 .username {
-  font-weight: 700;
+  font-weight: 500;
   color: var(--Dark-blue);
-}
-
-.createdAt-container {
-  /* height: 100%; */
 }
 
 .createdAt-container > span {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: var(--Grayish-Blue);
-  /* border: 1px solid black; */
 }
 
 .content-container {
-  /* border: 2px solid red; */
-  font-weight: 500;
+  font-weight: 400;
   color: var(--Grayish-Blue);
   text-align: left;
   grid-column: span 2;
@@ -292,12 +311,16 @@ export default {
   background-color: var(--Very-light-gray);
 }
 
+.scored {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
 .score-data {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 18.96px;
   color: var(--Moderate-blue);
 }
@@ -308,7 +331,6 @@ export default {
   align-items: center;
   gap: 16px;
   font-weight: 700;
-  /* color: var(--Moderate-blue); */
 }
 .edit-container .delete {
   display: flex;
@@ -320,6 +342,7 @@ export default {
 }
 
 .edit-container .delete > span {
+  font-weight: 500;
   color: var(--Soft-Red);
 }
 .edit-container .edit {
@@ -331,6 +354,8 @@ export default {
   filter: opacity(25%);
 }
 .edit-container .edit > span {
+  font-weight: 500;
+
   color: var(--Moderate-blue);
 }
 
@@ -374,10 +399,6 @@ export default {
   border-radius: 8px;
 }
 
-.delete-modal-form > * {
-  /* border: 1px solid blue; */
-}
-
 .delete-modal-title {
   width: 100%;
   text-align: left;
@@ -397,6 +418,10 @@ export default {
   width: 100%;
 }
 
+.delete-modal-btn > button:hover {
+  filter: opacity(55%);
+}
+
 .delete-cancel-btn {
   border: none;
   width: 138px;
@@ -406,6 +431,7 @@ export default {
   border-radius: 8px;
   font-weight: 600;
   font-size: 16px;
+  cursor: pointer;
 }
 .delete-confirm-btn {
   border: none;
@@ -416,5 +442,6 @@ export default {
   border-radius: 8px;
   font-weight: 600;
   font-size: 16px;
+  cursor: pointer;
 }
 </style>

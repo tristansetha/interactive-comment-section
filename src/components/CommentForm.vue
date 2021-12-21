@@ -71,6 +71,7 @@ export default {
   padding: 16px;
   margin-top: 16px;
   height: 189px;
+  width: 100%;
   border-radius: 8px;
   /* border: 1px solid black; */
   background-color: var(--White);
@@ -144,4 +145,10 @@ export default {
   cursor: pointer;
   background-color: var(--Light-grayish-blue);
 }
+@media (min-width: 1440px) {
+  .comment-form-container {
+    width: 730px;
+  }
+}
+
 </style>
