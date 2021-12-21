@@ -77,7 +77,4 @@ export default {
   margin-top: 16px;
 }
 
-.comment {
-  border: 2px solid black;
-}
 </style>

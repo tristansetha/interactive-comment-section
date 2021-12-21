@@ -274,6 +274,7 @@ export default {
 }
 
 .content-container {
+  font-size: 16px;
   font-weight: 400;
   color: var(--Grayish-Blue);
   text-align: left;
