@@ -6,6 +6,7 @@
         :key="comment.id"
         :currentUser="currentUser"
         :handleComment="handleComment"
+        :handleDeletion="handleDeletion"
         v-bind:comment="comment"
       />
     </div>
@@ -29,41 +30,104 @@ export default {
   },
   data: () => {
     return {
+      Generate_ID: 5,
       currentUser: json.currentUser,
       comments: json.comments,
     };
   },
   methods: {
+    handleDeletion(info) {
+      if (info.type === "comment") {
+        for (let i = 0; i < this.comments.length; i++) {
+          if (this.comments[i].id === info.id) {
+            this.comments.splice(i, 1);
+            break;
+          }
+        }
+      } else if (info.type === "reply"){
+        for (let i = 0; i < this.comments.length; i++) {
+          if (this.comments[i].id === info.threadId) {
+            for (let j = 0; j < this.comments[i].replies.length; j++) {
+              if (this.comments[i].replies[j].id === info.id) {
+                this.comments[i].replies.splice(j, 1);
+                console.log(this.comments[i].replies)
+                break;
+              }
+            }
+          }
+        }
+      }
+    },
     handleComment(comment) {
       const commentType = comment.type;
       switch (commentType) {
         case "comment-new":
-          console.log(commentType);
+          this.comments.push({
+            id: this.Generate_ID++,
+            content: comment.commentInput,
+            createdAt: "Today",
+            score: 0,
+            user: this.currentUser,
+            replies: [],
+          });
           break;
         case "comment-reply":
-          console.log(commentType);
+          for (const c of this.comments) {
+            if (c.id === comment.threadId) {
+              c.replies.push({
+                id: this.Generate_ID++,
+                content: comment.commentInput,
+                createdAt: "Today",
+                score: 0,
+                replyingTo: comment.replyingTo,
+                user: this.currentUser,
+              });
+            }
+          }
+          console.log(this.comments);
           break;
-
         case "reply-reply":
-          console.log(commentType);
+          for (const c of this.comments) {
+            if (c.id === comment.threadId) {
+              c.replies.push({
+                id: this.Generate_ID++,
+                content: comment.commentInput,
+                createdAt: "Today",
+                score: 0,
+                replyingTo: comment.replyingTo,
+                user: this.currentUser,
+              });
+            }
+          }
           break;
 
         case "comment-update":
-          console.log(commentType);
+          for (let i = 0; i < this.comments.length; i++) {
+            if (this.comments[i].id === comment.threadId) {
+              this.comments[i].content = comment.commentInput;
+              console.log(this.comments[i]);
+              break;
+            }
+          }
           break;
 
         case "reply-update":
-          console.log(commentType);
+          for (let i = 0; i < this.comments.length; i++) {
+            if (this.comments[i].id === comment.threadId) {
+              for (let j = 0; j < this.comments[i].replies.length; j++) {
+                if (this.comments[i].replies[j].id === comment.replyId) {
+                  this.comments[i].replies[j].content = comment.commentInput;
+                  break;
+                }
+              }
+            }
+          }
+
           break;
         default:
           console.log("no case");
           console.log(comment);
       }
-      // Comment -> add to comments array
-      // Reply-Comment -> (comment id) -> add to reply where comment id == comment.id
-      //
-
-      console.log();
     },
   },
 };

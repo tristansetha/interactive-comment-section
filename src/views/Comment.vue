@@ -8,10 +8,15 @@
       :user="comment.user"
       :currentUser="currentUser"
       :handleComment="handleComment"
+      :handleDeletion="handleDeletion"
       type="comment"
-      :commentFormCommentId="comment.id"
+      :threadId="comment.id"
       :commentFormType="
-        currentUser.username === comment.user ? 'comment-update': 'comment-reply'"/>
+        currentUser.username === comment.user.username
+          ? 'comment-update'
+          : 'comment-reply'
+      "
+    />
     <div class="replies-container" v-if="comment.replies.length > 0">
       <Card
         v-for="reply in comment.replies"
@@ -24,9 +29,12 @@
         :user="reply.user"
         :currentUser="currentUser"
         :handleComment="handleComment"
-        :commentFormCommentId="comment.id"
+        :handleDeletion="handleDeletion"
+        :threadId="comment.id"
         :commentFormType="
-          currentUser.username === comment.user ? 'reply-update' : 'reply-reply'
+          currentUser.username === reply.user.username
+            ? 'reply-update'
+            : 'reply-reply'
         "
         type="reply"
       />
@@ -45,6 +53,7 @@ export default {
     currentUser: Object,
     comment: Object,
     handleComment: Function,
+    handleDeletion: Function,
   },
 };
 </script>
@@ -63,29 +72,13 @@ export default {
   align-items: flex-end;
   margin-top: 16px;
   border-left: 2px solid var(--Light-gray);
-  /* border: 2px solid black; */
 }
 
 .replies-container > :not(:first-child) {
   margin-top: 16px;
-  /* border: 10px solid blue; */
 }
 
 .comment {
   border: 2px solid black;
 }
-/* h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-} */
 </style>

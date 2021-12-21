@@ -1,21 +1,14 @@
 <template>
   <div
-    :class="[
-      commentFormType === 'reply-reply'
-        ? 'comment-form-reply-container'
-        : 'comment-form-container',
-      commentFormType === 'reply-update'
-        ? 'comment-form-reply-container'
-        : 'comment-form-container',
-    ]"
-  >
+    :class="[commentFormType === 'reply-reply'? 'comment-form-reply-container': 'comment-form-container',commentFormType === 'reply-update'? 'comment-form-reply-container':'comment-form-container']">
     <div class="input-container">
       <textarea
         v-model="commentData.commentInput"
         class="comment-input"
         name="comment"
         placeholder="Add a comment..."
-      ></textarea>
+      >
+      </textarea>
     </div>
     <div class="picture-container">
       <img
@@ -25,14 +18,11 @@
       />
     </div>
     <div class="send-btn-container">
-      <button @click="handleComment(this.commentData)" class="send-btn">
+      <button @click="handleSend(), handleReplyFormOpen ? handleReplyFormOpen() : null" class="send-btn">
         <span v-if="commentFormType === 'comment-new'">SEND</span>
-        <span
-          v-if="
-            commentFormType === 'comment-reply' ||
-            commentFormType === 'reply-reply'
-          "
-          >REPLY</span
+        <span v-if="commentFormType === 'comment-reply' ||commentFormType === 'reply-reply'">REPLY</span
+        >
+        <span v-if="commentFormType === 'comment-update' ||commentFormType === 'reply-update'">UPDATE</span
         >
       </button>
     </div>
@@ -42,26 +32,33 @@
 export default {
   name: "CommentForm",
   props: {
+    replyId: Number,
     currentUser: Object,
     handleComment: Function,
     commentFormType: String,
     replyingTo: String,
-    commentId: Number,
+    threadId: Number,
+    handleReplyFormOpen: Function,
+    content: String
   },
   data: function () {
     return {
+      currentContent: "",
       commentData: {
         type: this.commentFormType,
-        commentInput: "",
+        commentInput: this.commentFormType === 'comment-update' || this.commentFormType === 'reply-update' ? this.content : "",
         replyingTo: this.replyingTo,
-        commentId: this.commentId,
+        threadId: this.threadId,
+        // for updating current user replies
+        replyId: this.replyId
       },
     };
   },
   methods: {
-    // testMethod() {
-    //   console.log(this.commentInput);
-    // },
+    handleSend() {
+      this.handleComment(this.commentData)
+      this.commentData.commentInput = ""
+    },
   },
 };
 </script>

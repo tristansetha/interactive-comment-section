@@ -43,7 +43,10 @@
         </div>
       </div>
       <div v-if="currentUser.username === user.username" class="edit-container">
-        <div class="delete">
+        <div
+          @click="this.deleteModalOpen = !this.deleteModalOpen"
+          class="delete"
+        >
           <div>
             <img :src="deleteIcon" alt="delete comment" />
           </div>
@@ -68,12 +71,33 @@
   </div>
   <CommentForm
     v-if="replyFormOpen"
-    :commentId="commentFormCommentId"
+    :threadId="threadId"
+    :replyId="id"
     :replyingTo="user.username"
     :commentFormType="commentFormType"
     :handleComment="handleComment"
     :currentUser="currentUser"
+    :handleReplyFormOpen="handleReplyFormOpen"
+    :content="content"
   />
+  <div v-if="deleteModalOpen" class="delete-modal-container">
+    <div class="delete-modal-form">
+      <div class="delete-modal-title">Delete comment</div>
+      <div class="delete-modal-info">
+        Are you sure you want to delete this comment? This will remove the
+        comment and can’t be undone.
+      </div>
+      <div class="delete-modal-btn">
+        <button
+          @click="this.deleteModalOpen = !this.deleteModalOpen"
+          class="delete-cancel-btn"
+        >
+          NO, CANCEL
+        </button>
+        <button @click="handleDeleteConfirmation" class="delete-confirm-btn">YES, DELETE</button>
+      </div>
+    </div>
+  </div>
   <!-- <div>hello world</div> -->
 </template>
 
@@ -108,11 +132,13 @@ export default {
     currentUser: Object,
     type: String,
     handleComment: Function,
+    handleDeletion: Function,
     commentFormType: String,
-    commentFormCommentId: Number,
+    threadId: Number,
   },
   data: function () {
     return {
+      deleteModalOpen: false,
       replyFormOpen: false,
       currentScore: this.score,
       plusIcon: PlusIcon,
@@ -120,9 +146,20 @@ export default {
       replyIcon: ReplyIcon,
       deleteIcon: DeleteIcon,
       editIcon: EditIcon,
+      toDelete: {
+        id: this.id,
+        threadId: this.threadId,
+        type: this.type,
+      },
     };
   },
   methods: {
+    handleDeleteConfirmation() {
+      this.handleDeletion(this.toDelete);
+    },
+    handleReplyFormOpen() {
+      this.replyFormOpen = !this.replyFormOpen;
+    },
     addScore() {
       this.currentScore++;
     },
@@ -309,5 +346,75 @@ export default {
 
 .reply-btn-container:hover {
   filter: opacity(25%);
+}
+
+.delete-modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.delete-modal-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 27px 24px 27px;
+  width: 343px;
+  height: 224px;
+  background-color: var(--White);
+  text-align: center;
+  border-radius: 8px;
+}
+
+.delete-modal-form > * {
+  /* border: 1px solid blue; */
+}
+
+.delete-modal-title {
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--Dark-blue);
+}
+
+.delete-modal-info {
+  text-align: left;
+  color: var(--Grayish-Blue);
+}
+
+.delete-modal-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.delete-cancel-btn {
+  border: none;
+  width: 138px;
+  height: 48px;
+  background-color: var(--Grayish-Blue);
+  color: var(--White);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.delete-confirm-btn {
+  border: none;
+  width: 138px;
+  height: 48px;
+  background-color: var(--Soft-Red);
+  color: var(--White);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
 }
 </style>
