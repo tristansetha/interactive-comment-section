@@ -147,6 +147,9 @@ export default {
   --Light-gray: hsl(223, 19%, 93%);
   --Very-light-gray: hsl(228, 33%, 97%);
   --White: hsl(0, 0%, 100%);
+
+  --Mobile-breakpoint: 375px;
+  --Desktop-breakpoint: 1440px;
 }
 
 html,

@@ -142,7 +142,28 @@ export default {
 }
 @media (min-width: 1440px) {
   .comment-form-container {
+    grid-template-columns: 0.1719197708fr 2.1747851004fr 0.4469914041fr;
+    grid-template-rows: 1fr;
     width: 730px;
+  }
+
+  .input-container {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .picture-container {
+    align-items: flex-start;
+    grid-column: 1;
+  }
+  .picture {
+    width: 40px;
+    height: 40px;
+  }
+
+  .send-btn-container {
+    align-items: flex-start;
+    grid-column: 3;
   }
 }
 

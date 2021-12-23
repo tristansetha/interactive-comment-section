@@ -302,6 +302,7 @@ export default {
   border-radius: 10px;
   border: none;
   background-color: var(--Very-light-gray);
+  cursor: pointer;
 }
 .score-minus-btn {
   display: flex;
@@ -310,6 +311,7 @@ export default {
   border-radius: 10px;
   border: none;
   background-color: var(--Very-light-gray);
+  cursor: pointer;
 }
 
 .scored {
@@ -444,5 +446,37 @@ export default {
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+}
+@media (min-width: 1440px) {
+  .card-elements-container {
+    grid-template-columns: 0.1967213115fr 1.7457fr 0.858fr;
+    grid-template-rows: 0.474074074fr 1.0666666666fr;
+  }
+
+  .score-container {
+    grid-row: 1 / 3;
+  }
+
+  .card-header-container {
+    grid-column: 2;
+  }
+
+  .reply-btn-container {
+    grid-row: 1;
+    grid-column: 3;
+  }
+  .edit-container {
+    grid-row: 1;
+    grid-column: 3;
+  }
+  .content-container {
+    grid-column: 2 / 4;
+  }
+  .score-btn {
+    width: 40px;
+    height: 100px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
 }
 </style>

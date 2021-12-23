@@ -63,6 +63,9 @@ export default {
 .comment-container {
   color: rgb(74, 23, 32);
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .replies-container {
@@ -77,4 +80,9 @@ export default {
   margin-top: 16px;
 }
 
+@media (min-width: 1440px) {
+  .replies-container {
+    width: 685px;
+  }
+}
 </style>
