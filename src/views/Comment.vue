@@ -63,9 +63,6 @@ export default {
 .comment-container {
   color: rgb(74, 23, 32);
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }
 
 .replies-container {

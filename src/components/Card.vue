@@ -209,7 +209,6 @@ export default {
   border-radius: 8px;
 }
 .reply-container {
-  color: rgb(74, 23, 32);
   width: 94%;
   padding: 16px;
   background-color: var(--White);
