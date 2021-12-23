@@ -78,6 +78,11 @@ export default {
 }
 
 @media (min-width: 1440px) {
+  .comment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
   .replies-container {
     width: 685px;
   }
