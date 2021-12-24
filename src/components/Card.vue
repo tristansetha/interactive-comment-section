@@ -38,7 +38,7 @@
             <img :src="plusIcon" alt="add-score" />
           </button>
           <span class="score-data">
-            <div>{{ currentScore }}</div>
+            <span>{{ currentScore }}</span>
           </span>
           <button
             @click="minusScore()"
